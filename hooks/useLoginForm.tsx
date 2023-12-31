@@ -21,9 +21,9 @@ export const useLoginForm = () => {
   const onSubmit = async (data: LoginSchemaProps) => {
     setError('');
     setSuccess('');
-    const { error, success } = await login(data);
-    setError(error);
-    setSuccess(success);
+    const res = await login(data);
+    setError(res?.error);
+    // setSuccess(success);
   };
 
   return { form, onSubmit, error, success };
