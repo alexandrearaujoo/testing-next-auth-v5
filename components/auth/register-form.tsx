@@ -14,21 +14,39 @@ import {
 import { Input } from '../ui/input';
 import { CardWrapper } from './card-wrapper';
 
-import { useLoginForm } from '@/hooks/useLoginForm';
+import { useRegisterForm } from '@/hooks/useRegisterForm';
 
-export const LoginForm = () => {
-  const { form, error, success, onSubmit } = useLoginForm();
+export const RegisterForm = () => {
+  const { form, error, success, onSubmit } = useRegisterForm();
 
   return (
     <CardWrapper
-      headerLabel="Welcome back!"
-      backButtonLabel="Don't have an account ?"
-      backButtonHref="/auth/register"
+      headerLabel="Create an account"
+      backButtonLabel="Already have an account ?"
+      backButtonHref="/auth/login"
       showSocial
     >
       <Form {...form}>
         <form className="space-y-6" onSubmit={form.handleSubmit(onSubmit)}>
           <section className="space-y-4">
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Name</FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      disabled={form.formState.isSubmitting}
+                      placeholder="John Doe"
+                      type="text"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
             <FormField
               control={form.control}
               name="email"
@@ -73,7 +91,7 @@ export const LoginForm = () => {
             className="w-full"
             disabled={form.formState.isSubmitting}
           >
-            Login
+            Register
           </Button>
         </form>
       </Form>
