@@ -25,6 +25,8 @@ export const useRegisterForm = () => {
     const { error, success } = await register(data);
     setError(error);
     setSuccess(success);
+
+    if (success) form.reset();
   };
 
   return { form, onSubmit, error, success };
