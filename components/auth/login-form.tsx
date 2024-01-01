@@ -1,5 +1,7 @@
 'use client';
 
+import { useSearchParams } from 'next/navigation';
+
 import { FormError } from '../form-error';
 import { FormSuccess } from '../form-success';
 import { Button } from '../ui/button';
@@ -16,7 +18,17 @@ import { CardWrapper } from './card-wrapper';
 
 import { useLoginForm } from '@/hooks/useLoginForm';
 
+interface UrlErrors {
+  [key: string]: string;
+}
+
+const urlErrors: UrlErrors = {
+  OAuthAccountNotLinked: 'Email already in use with different provider!'
+};
+
 export const LoginForm = () => {
+  const searchParams = useSearchParams();
+  const urlError = urlErrors[searchParams.get('error') ?? ''];
   const { form, error, success, onSubmit } = useLoginForm();
 
   return (
@@ -66,7 +78,7 @@ export const LoginForm = () => {
               )}
             />
           </section>
-          <FormError message={error} />
+          <FormError message={error ?? urlError} />
           <FormSuccess message={success} />
           <Button
             type="submit"
