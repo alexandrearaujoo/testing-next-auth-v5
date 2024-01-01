@@ -9,6 +9,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 export const useLoginForm = () => {
   const [error, setError] = useState<string>();
   const [success, setSuccess] = useState<string>();
+  const [showTwoFactor, setShowTwoFactor] = useState(false);
 
   const form = useForm<LoginSchemaProps>({
     resolver: zodResolver(LoginSchema),
@@ -21,10 +22,22 @@ export const useLoginForm = () => {
   const onSubmit = async (data: LoginSchemaProps) => {
     setError('');
     setSuccess('');
-    const res = await login(data);
-    setError(res?.error);
-    setSuccess(res?.success);
+
+    try {
+      const res = await login(data);
+
+      if (res?.error) setError(res?.error);
+
+      if (res?.success) {
+        form.reset();
+        setSuccess(res?.success);
+      }
+
+      if (res?.twoFactor) setShowTwoFactor(true);
+    } catch (error) {
+      setError('Something went wrong!');
+    }
   };
 
-  return { form, onSubmit, error, success };
+  return { form, onSubmit, error, success, showTwoFactor };
 };

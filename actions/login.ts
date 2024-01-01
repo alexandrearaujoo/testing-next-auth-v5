@@ -4,8 +4,11 @@ import { AuthError } from 'next-auth';
 
 import { signIn } from '@/auth';
 import { getUserByEmail } from '@/data/user';
-import { sendVerificationEmail } from '@/lib/mail';
-import { generateVerificationToken } from '@/lib/tokens';
+import {
+  sendTwoFactorToken,
+  twoFactorCodeMatch,
+  verificationEmail
+} from '@/lib/utils';
 import { DEFAULT_LOGIN_REDIRECT } from '@/routes';
 import { LoginSchema } from '@/schemas';
 import { LoginSchemaProps } from '@/schemas/schemaTypes';
@@ -30,16 +33,29 @@ export const login = async (data: LoginSchemaProps) => {
     return { error: 'Email does not exists!' };
 
   if (!existingUser.emailVerified) {
-    const verificationToken = await generateVerificationToken(
-      validatedFields.data.email
-    );
-
-    await sendVerificationEmail({
-      email: verificationToken.email,
-      token: verificationToken.token
-    });
-
+    await verificationEmail(validatedFields);
     return { success: 'Confirmation email sent!' };
+  }
+
+  if (
+    existingUser.isTwoFactorEnabled &&
+    existingUser.email &&
+    !validatedFields.data.code
+  ) {
+    await sendTwoFactorToken(existingUser);
+    return { twoFactor: true };
+  }
+
+  if (
+    existingUser.isTwoFactorEnabled &&
+    existingUser.email &&
+    validatedFields.data.code
+  ) {
+    await twoFactorCodeMatch({
+      email: existingUser.email,
+      userId: existingUser.email,
+      code: validatedFields.data.code
+    });
   }
 
   try {

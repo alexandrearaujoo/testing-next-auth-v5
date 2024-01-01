@@ -7,7 +7,8 @@ interface SendVerificationEmailProps {
   token: string;
 }
 
-type SendResetPasswordEmail = SendVerificationEmailProps;
+type SendResetPasswordEmailProps = SendVerificationEmailProps;
+type SendTwoFactorTokenEmailProps = SendVerificationEmailProps;
 
 export const sendVerificationEmail = async (
   data: SendVerificationEmailProps
@@ -22,7 +23,9 @@ export const sendVerificationEmail = async (
   });
 };
 
-export const sendPasswordResetEmail = async (data: SendResetPasswordEmail) => {
+export const sendPasswordResetEmail = async (
+  data: SendResetPasswordEmailProps
+) => {
   const resetLink = `http://localhost:3000/auth/new-password?token=${data.token}`;
 
   await resend.emails.send({
@@ -30,5 +33,16 @@ export const sendPasswordResetEmail = async (data: SendResetPasswordEmail) => {
     to: data.email,
     subject: 'Reset your password',
     html: `<p>Click <a href=${resetLink}>here</a> to reset your password. </p>`
+  });
+};
+
+export const sendTwoFactorTokenEmail = async (
+  data: SendTwoFactorTokenEmailProps
+) => {
+  await resend.emails.send({
+    from: 'onboarding@resend.dev',
+    to: data.email,
+    subject: '2FA Code',
+    html: `<p>Your 2FA Code: ${data.token}</p>`
   });
 };
