@@ -1,20 +1,5 @@
-import { auth, signOut } from '@/auth';
+import { SettingClient } from '../_components/settings-clients';
 
-export default async function SettingsPage() {
-  const session = await auth();
-
-  return (
-    <>
-      <h1>{JSON.stringify(session)}</h1>
-      <form
-        onSubmit={async () => {
-          'use server';
-
-          await signOut();
-        }}
-      >
-        <button type="submit">sign out</button>
-      </form>
-    </>
-  );
+export default function SettingsPage() {
+  return <SettingClient />;
 }
