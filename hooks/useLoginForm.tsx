@@ -23,7 +23,7 @@ export const useLoginForm = () => {
     setSuccess('');
     const res = await login(data);
     setError(res?.error);
-    // setSuccess(success);
+    setSuccess(res?.success);
   };
 
   return { form, onSubmit, error, success };
