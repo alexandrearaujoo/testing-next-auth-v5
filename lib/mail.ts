@@ -7,6 +7,8 @@ interface SendVerificationEmailProps {
   token: string;
 }
 
+type SendResetPasswordEmail = SendVerificationEmailProps;
+
 export const sendVerificationEmail = async (
   data: SendVerificationEmailProps
 ) => {
@@ -16,6 +18,17 @@ export const sendVerificationEmail = async (
     from: 'onboarding@resend.dev',
     to: data.email,
     subject: 'Confirm your email',
-    html: `<p>Click <a href=${confirmLink}>here</a> to confirm email </p>`
+    html: `<p>Click <a href=${confirmLink}>here</a> to confirm email. </p>`
+  });
+};
+
+export const sendPasswordResetEmail = async (data: SendResetPasswordEmail) => {
+  const resetLink = `http://localhost:3000/auth/new-password?token=${data.token}`;
+
+  await resend.emails.send({
+    from: 'onboarding@resend.dev',
+    to: data.email,
+    subject: 'Reset your password',
+    html: `<p>Click <a href=${resetLink}>here</a> to reset your password. </p>`
   });
 };
