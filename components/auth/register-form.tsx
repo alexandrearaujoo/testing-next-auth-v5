@@ -77,6 +77,7 @@ export const RegisterForm = () => {
                       disabled={form.formState.isSubmitting}
                       placeholder="******"
                       type="password"
+                      icon
                     />
                   </FormControl>
                   <FormMessage />

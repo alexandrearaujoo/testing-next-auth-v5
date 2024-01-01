@@ -72,6 +72,7 @@ export const LoginForm = () => {
                       disabled={form.formState.isSubmitting}
                       placeholder="******"
                       type="password"
+                      icon
                     />
                   </FormControl>
                   <Button
