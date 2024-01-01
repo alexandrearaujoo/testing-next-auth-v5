@@ -5,3 +5,9 @@ export const getCurrentUser = async () => {
 
   return { currentUser: session?.user };
 };
+
+export const getCurrentUserRole = async () => {
+  const session = await auth();
+
+  return { currentUserRole: session?.user.role };
+};
