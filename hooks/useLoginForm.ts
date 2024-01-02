@@ -6,7 +6,11 @@ import { LoginSchema } from '@/schemas';
 import { LoginSchemaProps } from '@/schemas/schemaTypes';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-export const useLoginForm = () => {
+export const useLoginForm = ({
+  callbackUrl
+}: {
+  callbackUrl: string | null;
+}) => {
   const [error, setError] = useState<string>();
   const [success, setSuccess] = useState<string>();
   const [showTwoFactor, setShowTwoFactor] = useState(false);
@@ -24,7 +28,7 @@ export const useLoginForm = () => {
     setSuccess('');
 
     try {
-      const res = await login(data);
+      const res = await login(data, callbackUrl);
 
       if (res?.error) setError(res?.error);
 

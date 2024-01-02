@@ -29,8 +29,11 @@ const urlErrors: UrlErrors = {
 
 export const LoginForm = () => {
   const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get('callbackUrl');
   const urlError = urlErrors[searchParams.get('error') ?? ''];
-  const { form, error, success, showTwoFactor, onSubmit } = useLoginForm();
+  const { form, error, success, showTwoFactor, onSubmit } = useLoginForm({
+    callbackUrl
+  });
 
   return (
     <CardWrapper

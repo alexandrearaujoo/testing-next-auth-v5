@@ -3,6 +3,9 @@
 import { useRouter } from 'next/navigation';
 import { ReactNode } from 'react';
 
+import { Dialog, DialogContent, DialogTrigger } from '../ui/dialog';
+import { LoginForm } from './login-form';
+
 interface LoginButtonProps {
   children: ReactNode;
   mode?: 'modal' | 'redirect';
@@ -19,7 +22,15 @@ export const LoginButton = ({
     router.push('/auth/login');
   };
 
-  if (mode === 'modal') return <span>oi</span>;
+  if (mode === 'modal')
+    return (
+      <Dialog>
+        <DialogTrigger asChild={asChild}>{children}</DialogTrigger>
+        <DialogContent className="p-o w-auto bg-transparent border-none">
+          <LoginForm />
+        </DialogContent>
+      </Dialog>
+    );
 
   return (
     <span className="cursor-pointer" onClick={onClick}>

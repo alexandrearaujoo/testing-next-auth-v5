@@ -22,7 +22,10 @@ const errorType: ErrorType = {
   AuthorizedCallbackError: 'Email not verified!'
 };
 
-export const login = async (data: LoginSchemaProps) => {
+export const login = async (
+  data: LoginSchemaProps,
+  callbackUrl: string | null
+) => {
   const validatedFields = LoginSchema.safeParse(data);
 
   if (!validatedFields.success) return { error: 'Invalid fields' };
@@ -62,7 +65,7 @@ export const login = async (data: LoginSchemaProps) => {
     await signIn('credentials', {
       email: validatedFields.data.email,
       password: validatedFields.data.password,
-      redirectTo: DEFAULT_LOGIN_REDIRECT
+      redirectTo: callbackUrl || DEFAULT_LOGIN_REDIRECT
     });
   } catch (error) {
     if (error instanceof AuthError) {
