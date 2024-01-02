@@ -1,7 +1,5 @@
 'use client';
 
-import { Form } from 'react-hook-form';
-
 import { FormError } from '../form-error';
 import { FormSuccess } from '../form-success';
 import { Button } from '../ui/button';
@@ -10,7 +8,8 @@ import {
   FormItem,
   FormLabel,
   FormControl,
-  FormMessage
+  FormMessage,
+  Form
 } from '../ui/form';
 import { Input } from '../ui/input';
 import { CardWrapper } from './card-wrapper';

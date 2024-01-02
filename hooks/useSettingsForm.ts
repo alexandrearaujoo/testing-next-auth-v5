@@ -22,11 +22,13 @@ export const useSettingsForm = () => {
       email: currentUser?.email ?? undefined,
       password: undefined,
       role: currentUser?.role ?? undefined,
-      isTwoFactorEnable: currentUser?.isTwoFactorEnabled ?? undefined
+      isTwoFactorEnabled: currentUser?.isTwoFactorEnabled ?? undefined
     }
   });
 
   const onSubmit = async (data: SettingSchemaProps) => {
+    setError('');
+    setSuccess('');
     try {
       const res = await settings(data);
 

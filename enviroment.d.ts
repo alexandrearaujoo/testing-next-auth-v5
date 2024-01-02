@@ -7,7 +7,7 @@ namespace NodeJS {
     GITHUB_CLIENT_SECRET: string;
     GOOGLE_CLIENT_ID: string;
     GOOGLE_CLIENT_SECRET: string;
-    RESEND_API_KEY: string;
+    NEXT_PUBLIC_RESEND_API_KEY: string;
     NEXT_PUBLIC_APP_URL: string;
   }
 }

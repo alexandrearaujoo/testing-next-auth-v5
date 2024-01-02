@@ -137,7 +137,7 @@ export const SettingsForm = () => {
           {currentUser?.isOAuth === false && (
             <FormField
               control={form.control}
-              name="isTwoFactorEnable"
+              name="isTwoFactorEnabled"
               render={({ field }) => (
                 <FormItem className="flex item-center justify-between rounded-lg p-3 shadow-md">
                   <article className="space-y-0.5">

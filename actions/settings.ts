@@ -21,7 +21,7 @@ export const settings = async (data: SettingSchemaProps) => {
     data.email = undefined;
     data.password = undefined;
     data.newPassword = undefined;
-    data.isTwoFactorEnable = undefined;
+    data.isTwoFactorEnabled = undefined;
   }
 
   if (data.email && data.email !== currentUser.email) {
