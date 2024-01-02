@@ -3,7 +3,7 @@ import { prisma } from './prisma';
 import { getPasswordResetTokenByEmail } from '@/data/passwordResetToken';
 import { getTwoFactorTokenByEmail } from '@/data/two-factor-token';
 import { getVerificationTokenByEmail } from '@/data/verificationToken';
-import crypto from 'node:crypto';
+import crypto from 'crypto';
 import { v4 as uuidv4 } from 'uuid';
 
 export const generateVerificationToken = async (email: string) => {
